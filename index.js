@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let resetScreen = false;
 
     const updateDisplay = () => {
-        output.textContent = currInput || '0';
+        output.textContent = currInput || '';
     }
 
     const clearBtn = () => {
@@ -107,6 +107,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     clearButton.addEventListener('click', clearBtn);
+
+    document.addEventListener('keydown', (event) => {
+        const key = event.key;
+
+        if(key >= '0' && key <= '9') {
+            appNum(key);
+        }
+        else if(key === '.') {
+            appNum('.');
+        }
+
+        else if(key === '+' || key === '-' || key === '/' || key === '*' ) {
+            let changeSymbol;
+
+            if(key === '/') {  
+                changeSymbol = '÷';
+            }
+            else if (key === '*') {
+                 changeSymbol = 'x';
+            }
+            else { changeSymbol = key;
+            }
+
+            chooseOperation(changeSymbol);
+        }
+
+        else if (key === '=' || key === 'Enter') {
+            handleEquals();
+        }
+        else if(key === 'C' || key === 'c' || key === 'Escape') {
+            clearBtn();
+        }
+        else if(key === "Backspace") {
+            currInput = currInput.slice(0, -1);
+            updateDisplay();
+        }
+    });
 
     updateDisplay();
 });
